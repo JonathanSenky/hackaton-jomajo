@@ -26,7 +26,31 @@
       </div>
       <div class="modal-body">
         <form action="bdd_creation_salle.php" method="POST" >
-			<input type="text" />
+			<label for="nomSalle">Nom de la salle</label>
+			<input type="text" class="form-control" id="nomSalle" name="nomSalle" placeholder="Entrez un nom de salle">
+			
+			<label for="mail">Votre e-mail</label>
+			<input type="email" class="form-control" id="mail" name="mail" placeholder="Entrez votre adresse e-mail">
+			
+			<label for="dateDeb">Date de début</label>
+			<input type="text" class="form-control" id="dateDeb" name="dateDeb" placeholder="Entrez une date de début">
+			
+			<label for="dateDeb">Date de fin</label>
+			<input type="text" class="form-control" id="dateFin" name="dateFin" placeholder="Entrez une date de fin">
+			
+			<br />
+			
+			<label for="mail">Partager avec</label> <button class="btn btn-info" type="button" onclick="javascript:ajouterChampMail();" ><span class="glyphicon glyphicon-plus"></span> Ajouter un champ</button>
+			<br /><br />
+			<div id="adresses_mail" name="adresses_mail">
+				<div class='input-group'>
+					<input type='email' class='form-control' id='mail[]' name='mail[]' placeholder='Entrez une adresse e-mail' style='margin-top:5px;'>
+					<span class='input-group-btn'>
+						<button class='btn btn-default' onclick='javascript:removeParent(this);' type='button' style='margin-top:5px;'>&times;</button>
+					</span>
+				</div>
+			</div>
+			
 		
       </div>
       <div class="modal-footer">
@@ -42,6 +66,35 @@
 <?php
 	include_once("include_scripts.php");
 ?>
+
+<script type="text/JavaScript">
+
+	function ajouterChampMail(){
+		
+		var champ = document.getElementById('adresses_mail');
+		
+		var div = document.createElement("div");
+		div.setAttribute('class','input-group');
+		
+		div.innerHTML = "<input type='email' class='form-control' id='mail[]' name='mail[]' placeholder='Entrez une adresse e-mail' style='margin-top:5px;'><span class='input-group-btn'><button class='btn btn-default' onclick='javascript:removeParent(this);' type='button' style='margin-top:5px;'>&times;</button></span>";
+		
+		champ.appendChild(div);
+		
+	}
+	
+	function removeParent(elt){
+		
+		//l'élément à supprimer
+		var parent = elt.parentNode.parentNode;
+		
+		//le parent de l'élément à supprimer
+		var parentParent = parent.parentNode;
+		
+		parentParent.removeChild(parent);
+	
+	}
+	
+</script>
 </html>
 
 
