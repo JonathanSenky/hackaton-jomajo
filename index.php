@@ -84,21 +84,21 @@
 <div class="row">
 <div class="col-sm-6">
 <blockquote class="t-1">
-<p>From the beginning, Roots just made sense to me. Logical code organization and everything seemed to be in its place. It's just a great consistent base that I've worked into to the workflow here at our agency.</p>
-<small><img src="http://www.gravatar.com/avatar/d2e16050be7de854854eb724f0de2d67?s=80&d=mm&r=g" width="45" height="45" class="img-circle"> <a href="http://www.konemarketing.com/">Dan Egan</a></small>
+<p>From the beginning, Hackaton just made sense to me. It's just a great web app base that we've worked during 2 days xD.</p>
+<small>Ginger Guy</small>
 </blockquote>
 </div>
 <div class="col-sm-6">
 <blockquote class="t-2">
-<p>Roots extends and builds on what drew me to WordPress: the ability to create simple and functional sites very quickly, with the power to build custom and complex functionality as well.</p>
-<small><img src="http://www.gravatar.com/avatar/5b7205324676b483047d491bbe8adca6?s=80&d=mm&r=g" width="45" height="45" class="img-circle"> <a href="http://c2itllc.com/">Chris Carr</a></small>
+<p>It's a great experience to work on team to don't see people with you work :) </p>
+<small>Charly</small>
 </blockquote>
 
 <div class="row">
 <div class="col-lg-12">
 <blockquote class="t-3">
-<p>Your theme is one of the best Bootstrap based starter themes. But to me your theme is more than that, it helped me, inspired me, and changed my way of organizing project structure. I've learned many new things via GitHub discussions too. There was a hard learning curve in the beginning compared to other WP themes, but when you pass that stage everything is just right. I have my own freedom to do anything with your theme. I really appreciate all developers who worked hard making this theme.</p>
-<small><img src="http://www.gravatar.com/avatar/b1bcef210fbb8c637928f7212140ed33?s=80&d=mm&r=g" width="45" height="45" class="img-circle"> <a href="http://simonalex.com/">Alex Lim</a></small>
+<p>huuu hiii huuu hiii hiihuuu hiii huuu hiii hiii hiihuuu hiii</p>
+<small><img src="http://www.gravatar.com/avatar/b1bcef210fbb8c637928f7212140ed33?s=80&d=mm&r=g" width="45" height="45" class="img-circle"> <a href="http://simonalex.com/">Trololo </a></small>
 </blockquote>
 </div>
 </div>
