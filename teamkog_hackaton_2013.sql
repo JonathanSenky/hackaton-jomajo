@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: sql427.redheberg.com
--- Généré le: Jeu 28 Novembre 2013 à 14:55
+-- Généré le: Jeu 28 Novembre 2013 à 15:02
 -- Version du serveur: 5.1.69-log
 -- Version de PHP: 5.3.17
 
@@ -116,7 +116,7 @@ ALTER TABLE `Etapes`
 -- Contraintes pour la table `Propositions`
 --
 ALTER TABLE `Propositions`
-  ADD CONSTRAINT `Propositions_ibfk_2` FOREIGN KEY (`idTypeProposition`) REFERENCES `Propositions` (`idTypeProposition`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `Propositions_ibfk_2` FOREIGN KEY (`idTypeProposition`) REFERENCES `TypesPropositions` (`idTypeProposition`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `Propositions_ibfk_1` FOREIGN KEY (`idEtape`) REFERENCES `Etapes` (`idEtape`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
