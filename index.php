@@ -61,7 +61,10 @@
 <h1>Hackaton</h1>
 <h2>Travel, travel, travel ... </h2>
 <ul class="list-inline list-btns">
-<li><a class="btn btn-primary btn-lg" href="/modal.php">Create a Room</a></li>
+
+<!--  LE BOUTON EST ICI -->
+
+<li><a class="btn btn-primary btn-lg" href="/docs/">Create a Room</a></li>
 <li></li>
 </ul>
 </div>
@@ -98,12 +101,18 @@
 <div class="col-lg-12">
 <blockquote class="t-3">
 <p>huuu hiii huuu hiii hiihuuu hiii huuu hiii hiii hiihuuu hiii</p>
-<small><img src="http://www.gravatar.com/avatar/b1bcef210fbb8c637928f7212140ed33?s=80&d=mm&r=g" width="45" height="45" class="img-circle">Trololo </small>
+<small><img src="http://www.gravatar.com/avatar/b1bcef210fbb8c637928f7212140ed33?s=80&d=mm&r=g" width="45" height="45" class="img-circle"> <a href="http://simonalex.com/">Trololo </a></small>
 </blockquote>
 </div>
 </div>
 </div>
 </section>
+
+
+
+
+
+
 
 
 
@@ -132,6 +141,7 @@
 </div>
 </footer>
 
+<script src="/assets/js/1f7070be.scripts.min.js"></script>
 
 
 <script>
