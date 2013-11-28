@@ -39,7 +39,7 @@
 <a class="brand" itemprop="url" href="/">
 <img itemprop="logo" src="http://roots.io/assets/img/roots.svg" class="hidden">
 <i class="icon-roots"></i>
-<b>Roots</b>
+<b>Ginger Corp</b>
 </a>
 </div>
 
@@ -105,28 +105,7 @@
 </div>
 </section>
 
-<section class="gallery">
-<div class="container">
-<h2>
-Built with Roots
-<a class="btn btn-primary" href="/gallery/">View Gallery</a>
-</h2>
-<div class="gallery-featured row">
-<div class="gallery-item col-xs-6 col-md-3">
-<a href="/gallery/otherinbox/" class="thumbnail"><img src="/media/otherinbox.jpg" alt="OtherInbox" title="OtherInbox"></a>
-</div>
-<div class="gallery-item col-xs-6 col-md-3">
-<a href="/gallery/webink-blog/" class="thumbnail"><img src="/media/webink-blog.jpg" alt="WebINK Blog" title="WebINK Blog"></a>
-</div>
-<div class="gallery-item col-xs-6 col-md-3">
-<a href="/gallery/shoretel-sky/" class="thumbnail"><img src="/media/shoretel-sky.jpg?112013" alt="ShoreTel Sky" title="ShoreTel Sky"></a>
-</div>
-<div class="gallery-item col-xs-6 col-md-3">
-<a href="/gallery/women-and-tech/" class="thumbnail"><img src="/media/women-and-tech.jpg" alt="Women And Tech" title="Women And Tech"></a>
-</div>
-</div>
-</div>
-</section>
+
 
 
 
@@ -153,12 +132,9 @@ Built with Roots
 <li><a href="http://demo.roots.io/">Demo</a></li>
 </ul>
 <ul>
-<li><a href="https://github.com/roots/roots"><i class="icon-github"></i></a></li>
-<li><a href="https://twitter.com/retlehs"><i class="icon-twitter"></i></a></li>
 </ul>
 </nav>
-<p>&copy; 2013 Roots &middot; <a href="/privacy/">Privacy Policy</a></p>
-<p><i class="icon-roots"></i></p>
+<p>&copy; 2013 Ginger Corp &middot; <a href="/privacy/">Privacy Policy</a></p>
 </div>
 </footer>
 
