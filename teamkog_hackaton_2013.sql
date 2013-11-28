@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: sql427.redheberg.com
--- Généré le: Jeu 28 Novembre 2013 à 14:16
+-- Généré le: Jeu 28 Novembre 2013 à 14:55
 -- Version du serveur: 5.1.69-log
 -- Version de PHP: 5.3.17
 
@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `Salles` (
 --
 
 CREATE TABLE IF NOT EXISTS `TypesPropositions` (
-  `idTypeProposition` int(2) NOT NULL AUTO_INCREMENT,
+  `idTypeProposition` int(3) NOT NULL AUTO_INCREMENT,
   `libelleProposition` varchar(50) CHARACTER SET latin1 NOT NULL,
   PRIMARY KEY (`idTypeProposition`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
