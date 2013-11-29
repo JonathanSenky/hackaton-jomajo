@@ -14,7 +14,7 @@
             if(isset($_GET['lienSalle']) && !empty($_GET['lienSalle']))
             {
                 $lienSalle = $_GET['lienSalle'];
-                $req=$bdd->prepare('SELECT s.idSalle, nomSalle, destination, dateDebut, e.dateFin FROM salles s, etapes e WHERE lienSalle=? AND s.idSalle = e.idSalle');
+                $req=$bdd->prepare('SELECT s.idSalle, idEtape, nomSalle, destination, dateDebut, e.dateFin FROM salles s, etapes e WHERE lienSalle=? AND s.idSalle = e.idSalle');
                 $req->execute(array($lienSalle));
                 if($req->rowCount()==0)
                 {
@@ -24,10 +24,11 @@
                 {
                     $row=$req->fetch();
                     $idSalle = $row[0];
-                    $nomSalle = $row[1];
-                    $destination = $row[2];
-                    $dateDebut = $row[3];
-                    $dateFin = $row[4];
+                    $idEtape = $row[1];
+                    $nomSalle = $row[2];
+                    $destination = $row[3];
+                    $dateDebut = $row[4];
+                    $dateFin = $row[5];
                 }
                 $req->closeCursor();
             }
@@ -91,13 +92,14 @@
                             <ul class="nav nav-tabs nav-justified">
                                 <li id="liLgt" class="active"><a href="#" onclick="remiseZero('lgt')">Logements</a></li>
                                 <li id="liExp"><a href="#" onclick="remiseZero('exp')">Expériences</a></li>
-                                <li id="liResto"><a href="#" onclick="remiseZero('resto')">Restaurants</a></li>
+                                <li id="liResto"><a href="#">Restaurants</a></li>
                             </ul>
                         </div>
                         <div><!-- Liste des propositions -->
                             <br>
                             <h3>Liste des <span id="spanType">logements</span></h3>
                             <input id="ordrePrix" type="text" class="form-control" placeholder="Saisissez un prix maximum">
+                            <button type="button" class="btn" onclick="remiseZero(mode);">Rechercher</button>
                             <table class="table table-stripped table-condensed">
                                 <thead>
                                     <th>Image</th>
@@ -125,10 +127,12 @@
         <script>
             var page=1;
             var results=0;
+            var idEtape=<?php echo $idEtape;?>;
             var mode='lgt';
             
             function vote(pid, idTypeProposition)
             {
+                $('#myModal').modal('show');
                 console.log('On envoie');
                 console.log('pid : '+pid);
                 $('#vote'+pid).html('Merci de votre vote !').attr('disabled', 'true');
@@ -137,6 +141,7 @@
                 localStorage[pid] = true;
                 $.get('bdd_vote.php?idProposition='+pid+'&idEtape=1&idTypeProposition='+idTypeProposition, function success(data)
                        {
+                           $('#myModal').modal('hide');
                            console.log('Vote pris en compte');
                        });
             }
@@ -159,6 +164,7 @@
                     var nbVotes = proposition.nb_votes;
                     var pid = proposition.pid;
                     var provider = proposition.provider;
+                    var prix = proposition.price;
                     
                     var htmlImage = '<img class="vignette" src="'+urlPhoto+'">';
                     var htmlBoutonCarousel;
@@ -174,8 +180,8 @@
                     }
                     
                     
-                    $('#tbody').html($('#tbody').html() + '<tr><td>'+htmlImage+'<br><br><center>'+htmlBoutonVote+'<br><br><strong>Nombre de votes : <span id="spanVote'+pid+'">'+nbVotes+'</span></strong></center></td><td><h3>'+heading+'</h3><br><pre>'+description+'</pre><br>'+htmlBoutonDetails+'</td></tr>');
-                    
+                    $('#tbody').html($('#tbody').html() + '<tr><td>'+htmlImage+'<br><br><center><span style="color:#d2322d;"><strong>Prix : '+prix+'€</strong></span><br><br>'+htmlBoutonVote+'<br><br><strong>Nombre de votes : <span id="spanVote'+pid+'">'+nbVotes+'</span></strong></center></td><td><h3>'+heading+'</h3><br><pre>'+description+'</pre><br>'+htmlBoutonDetails+'</td></tr>');
+                    $('#myModal').modal('hide');
                     //console.log(proposition);
                 }
             }
@@ -214,7 +220,7 @@
                     
                     
                     $('#tbody').html($('#tbody').html() + '<tr><td>'+htmlImage+'<br><br><center>'+htmlBoutonVote+'<br><br><strong>Nombre de votes : <span id="spanVote'+mid+'">'+nbVotes+'</span></strong></center></td><td><h3>'+heading+'</h3><br><pre>'+description+'</pre><br>'+htmlBoutonDetails+'</td></tr>');
-                    
+                    $('#myModal').modal('hide');
                     //console.log(proposition);
                 }
             }
@@ -230,10 +236,22 @@
                 mode = type;
                 genererListe();
                 $('#tbody').html('');
+                $('#ordrePrix').val('');
+                var type;
+                switch(mode)
+                {
+                        case 'lgt':
+                            type='logements';
+                            break;
+                        case 'exp':
+                            type='expériences';
+                }
+                $('#spanType').html(type)
             }
             
             function genererListe()
             {
+                $('#myModal').modal('show');
                 $('#liLgt').removeClass('active');
                 $('#liExp').removeClass('active');
                 $('#liResto').removeClass('active');
@@ -248,11 +266,11 @@
                 {
                         case 'lgt':
                             $('#liLgt').addClass('active');
-                            $.getJSON('services/s_appel_recup.php?mode=lgt&idEtape=1&page='+page+'&ordrePrix='+ordrePrix, genererLogements);
+                            $.getJSON('services/s_appel_recup.php?mode=lgt&idEtape='+idEtape+'&page='+page+'&ordrePrix='+ordrePrix, genererLogements);
                             break;
                         case 'exp':
                             $('#liExp').addClass('active');
-                            $.getJSON('services/s_appel_recup.php?mode=exp&idEtape=1&page='+page, genererExperiences);
+                            $.getJSON('services/s_appel_recup.php?mode=exp&idEtape='+idEtape+'&page='+page, genererExperiences);
                             break;
                         case 'resto':
                             $('#liResto').addClass('active');
@@ -263,6 +281,7 @@
              $(function () {
                 setTimeout(function(){results=1;},5000);
                 genererListe('lgt');
+                //$('#myModal').modal('show');
                 var $window = $(window);
                 $window.scroll(function () {
                  if ($window.height() + $window.scrollTop()== $(document).height() && results==1) {
@@ -275,6 +294,20 @@
                  }
              });
          });
+        </script>
+        
+        <div style='position: absolute; left: 50%; top: 50%;' class="fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div>
+            <div>
+              <div>
+                <img src="http://www.mediaforma.com/sdz/jquery/ajax-loader.gif">
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        
+        <script>
+            
         </script>
         
     </body>
