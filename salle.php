@@ -98,8 +98,10 @@
                         <div><!-- Liste des propositions -->
                             <br>
                             <h3>Liste des <span id="spanType">logements</span></h3>
-                            <input id="ordrePrix" type="text" class="form-control" placeholder="Saisissez un prix maximum">
-                            <button type="button" class="btn" onclick="remiseZero(mode);">Rechercher</button>
+                            <form class="">
+                                <input id="ordrePrix" type="text" class="form-control" placeholder="Saisissez un prix maximum">
+                                <button type="button" class="btn" onclick="remiseZero(mode);">Rechercher</button>
+                            </form>
                             <table class="table table-stripped table-condensed">
                                 <thead>
                                     <th>Image</th>
@@ -284,11 +286,11 @@
                 //$('#myModal').modal('show');
                 var $window = $(window);
                 $window.scroll(function () {
-                 if ($window.height() + $window.scrollTop()== $(document).height() && results==1) {
+                 if ($window.height() + $window.scrollTop()== $(document).height() && results==1 && timer=1) {
                      page++;
                      console.log(page);
-                     results=0;
-                     setTimeout(function(){results=1;},5000);
+                     timer=0;
+                     setTimeout(function(){timer=1;},5000);
                      console.log('Scroll en bas de page');
                      genererListe();
                  }
