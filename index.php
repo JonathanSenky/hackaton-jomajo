@@ -112,14 +112,14 @@
 			
 			<div class="col-sm-6">
 				<blockquote class="t-2">
-				<p>Commit du soir, espoir. Build du matin, chagrin T_T</p>
+				<p>"Commit du soir, espoir. Build du matin, chagrin T_T"</p>
 				<small>Matthieu NICOLAS</small>
 				</blockquote>
 			</div>
 			
 			<div class="col-sm-6">
 				<blockquote class="t-2">
-				<p></p>
+				<p>"Il y a 10 types de personnes dans le monde : celles qui comprennent le binaire, et celles qui ne le comprennent pas."</p>
 				<small>Charles BESSONNET</small>
 				</blockquote>
 			</div>
