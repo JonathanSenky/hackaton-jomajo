@@ -8,6 +8,28 @@
 	$id_type_logement = 1;
 	$id_type_experience = 2;
 
+    function pid_in_tab($in, $tab)
+    {
+        foreach($tab as $logement)
+        {
+            if($logement->pid == $in->pid)
+                return true;
+        }
+        
+        return false;
+    }
+
+    function mid_in_tab($in, $tab)
+    {
+        foreach($tab as $experience)
+        {
+            if($experience->mid == $in->mid)
+                return true;
+        }
+        
+        return false;
+    }
+
 	function recup_donnees_api($url, $options = array())
 	{
 		if(!empty($options))
@@ -59,7 +81,7 @@
         
         foreach($logements_api as $num_logement => $logement)
         {
-            if(!in_array($logement, $temp) && $logement->price <= $ordre_prix)
+            if(!pid_in_tab($logement, $temp) && $logement->price <= $ordre_prix)
             {
                 array_push($res, $logement);
             }
@@ -95,7 +117,7 @@
 		
 		foreach($experiences_api as $num_experience => $experience)
 		{
-			if(!in_array($experience, $res))
+			if(!mid_in_tab($experience, $res))
 			{
 				array_push($res, $experience);
 			}

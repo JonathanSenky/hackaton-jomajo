@@ -89,9 +89,9 @@
                     <div> <!-- Liste des propositions -->
                         <div> <!-- Onglets -->
                             <ul class="nav nav-tabs nav-justified">
-                                <li id="liLgt" class="active"><a href="#" onclick="genererListe('lgt')">Logements</a></li>
-                                <li id="liExp"><a href="#" onclick="genererListe('exp')">Expériences</a></li>
-                                <li id="liResto"><a href="#" onclick="genererListe('resto')">Restaurants</a></li>
+                                <li id="liLgt" class="active"><a href="#" onclick="remiseZero('lgt')">Logements</a></li>
+                                <li id="liExp"><a href="#" onclick="remiseZero('exp')">Expériences</a></li>
+                                <li id="liResto"><a href="#" onclick="remiseZero('resto')">Restaurants</a></li>
                             </ul>
                         </div>
                         <div><!-- Liste des propositions -->
@@ -124,12 +124,17 @@
         
         <script>
             var page=1;
-            var results=1;
+            var results=0;
+            var mode='lgt';
             
             function vote(pid, idTypeProposition)
             {
                 console.log('On envoie');
                 console.log('pid : '+pid);
+                $('#vote'+pid).html('Merci de votre vote !').attr('disabled', 'true');
+                var nbVotes = parseInt($('#spanVote'+pid).html()) +1;
+                $('#spanVote'+pid).html(nbVotes);
+                localStorage[pid] = true;
                 $.get('bdd_vote.php?idProposition='+pid+'&idEtape=1&idTypeProposition='+idTypeProposition, function success(data)
                        {
                            console.log('Vote pris en compte');
@@ -138,7 +143,7 @@
             
             function genererLogements(json)
             {
-                if(json.length=0)
+                if(json.length==0)
                 {
                     results=0;
                 }
@@ -158,10 +163,18 @@
                     var htmlImage = '<img class="vignette" src="'+urlPhoto+'">';
                     var htmlBoutonCarousel;
                     var htmlBoutonDetails = '<a href="'+lien+'" target="_blank" class="btn btn-info">Plus de détails</a>';
-                    var htmlBoutonVote = '<button type="button" class="btn btn-success" onclick="vote(\''+pid+'\', 1);">Votez</button>';
+                    var htmlBoutonVote;
+                    if(localStorage[pid])
+                    {
+                        htmlBoutonVote = '<button id="vote'+pid+'" type="button" class="btn btn-success" disabled>Merci de votre vote !</button>';
+                    }
+                    else
+                    {
+                        htmlBoutonVote = '<button id="vote'+pid+'" type="button" class="btn btn-success" onclick="vote(\''+pid+'\', 1);">Votez</button>';
+                    }
                     
                     
-                    $('#tbody').html($('#tbody').html() + '<tr><td>'+htmlImage+'</td><td><h3>'+heading+'</h3><br><pre>'+description+'</pre><br>'+htmlBoutonVote+'&nbsp;'+htmlBoutonDetails+'</td></tr>');
+                    $('#tbody').html($('#tbody').html() + '<tr><td>'+htmlImage+'<br><br><center>'+htmlBoutonVote+'<br><br><strong>Nombre de votes : <span id="spanVote'+pid+'">'+nbVotes+'</span></strong></center></td><td><h3>'+heading+'</h3><br><pre>'+description+'</pre><br>'+htmlBoutonDetails+'</td></tr>');
                     
                     //console.log(proposition);
                 }
@@ -169,25 +182,62 @@
             
             function genererExperiences(json)
             {
+                if(json.length==0)
+                {
+                    results=0;
+                }
                 for(var i=0; i<json.length; i++)
                 {
                     var proposition = json[i];
                     console.log(proposition);
+                    var photos = proposition.photos;
+                    var urlPhoto = photos[0].photo;
+                    var heading = proposition.heading;
+                    var description = proposition.description;
+                    var lien = proposition.link;
+                    var nbVotes = proposition.nb_votes;
+                    var mid = proposition.mid;
+                    var provider = proposition.provider;
+                    
+                    var htmlImage = '<img class="vignette" src="'+urlPhoto+'">';
+                    var htmlBoutonCarousel;
+                    var htmlBoutonDetails = '<a href="'+lien+'" target="_blank" class="btn btn-info">Plus de détails</a>';
+                    var htmlBoutonVote;
+                    if(localStorage[mid])
+                    {
+                        htmlBoutonVote = '<button id="vote'+mid+'" type="button" class="btn btn-success" disabled>Merci de votre vote !</button>';
+                    }
+                    else
+                    {
+                        htmlBoutonVote = '<button id="vote'+mid+'" type="button" class="btn btn-success" onclick="vote(\''+mid+'\', 2);">Votez</button>';
+                    }
+                    
+                    
+                    $('#tbody').html($('#tbody').html() + '<tr><td>'+htmlImage+'<br><br><center>'+htmlBoutonVote+'<br><br><strong>Nombre de votes : <span id="spanVote'+mid+'">'+nbVotes+'</span></strong></center></td><td><h3>'+heading+'</h3><br><pre>'+description+'</pre><br>'+htmlBoutonDetails+'</td></tr>');
+                    
+                    //console.log(proposition);
                 }
             }
             
             function genererResto(json)
             {
+                
             }
             
-            function genererListe(mode)
+            function remiseZero(type)
             {
-                console.log('Coucou');
+                page = 1;
+                mode = type;
+                genererListe();
+                $('#tbody').html('');
+            }
+            
+            function genererListe()
+            {
                 $('#liLgt').removeClass('active');
                 $('#liExp').removeClass('active');
                 $('#liResto').removeClass('active');
                 
-                $('#tbody').html('');
                 var ordrePrix = $('#ordrePrix').val();
                 if(!ordrePrix || ordrePrix==0)
                 {
@@ -211,11 +261,17 @@
             }
                 
              $(function () {
+                setTimeout(function(){results=1;},5000);
                 genererListe('lgt');
-             var $window = $(window);
-             $window.scroll(function () {
+                var $window = $(window);
+                $window.scroll(function () {
                  if ($window.height() + $window.scrollTop()== $(document).height() && results==1) {
-                     alert('Scroll en bas de page');
+                     page++;
+                     console.log(page);
+                     results=0;
+                     setTimeout(function(){results=1;},5000);
+                     console.log('Scroll en bas de page');
+                     genererListe();
                  }
              });
          });
