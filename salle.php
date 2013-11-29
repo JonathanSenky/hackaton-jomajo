@@ -129,7 +129,7 @@
                     <div id="divCommentaires">
                     </div>
                     <center>
-                        <button class="btn btn-info">Ajouter un commentaire</button>
+                        <button class="btn btn-info" data-toggle="modal" data-target="#modalCommentaire">Ajouter un commentaire</button>
                     </center>
                 </div>
             </div>
@@ -164,9 +164,22 @@
                        });
             }
             
-	
-	
-	function recupCommentaires()
+            function posterCommentaire()
+            {
+                $('#modalCommentaire').modal('hide');
+               $('#myModal').modal('show');                
+                var auteur=$('#inputAuteur').val();
+                var contenu=$('#textAreaContenu').val();
+                $.get('services/s_commentaires.php?mode=post&idSalle='+idSalle+'&auteur='+auteur+'&contenu='+contenu, function (json)
+                          {
+                                $('#inputAuteur').val('');
+                                $('#textAreaContenu').val('');                              
+                                recupCommentaires(1);
+                              console.log('Ben merde :o');
+                          });
+            }
+            
+	        function recupCommentaires(flag)
             {
                 $.getJSON('services/s_commentaires.php?mode=get&idSalle='+idSalle, function (json)
                           {
@@ -190,6 +203,10 @@
                                     html+='</tbody></table>';
                                 }
                                 $('#divCommentaires').html(html);
+                                if(flag)
+                                {
+                                    $('#myModal').modal('hide');
+                                }
                           });
             }
             function genererLogements(json)
@@ -351,10 +368,28 @@
             </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
-        
-        <script>
+
+        <!-- Modal -->
+    <div class="modal fade" id="modalCommentaire" tabindex="-1" role="dialog" aria-labelledby="modalCommentaireLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="modalCommentaireLabel">Rédaction d'un commentaire</h4>
+          </div>
+          <div class="modal-body">
+              <label for='inputAuteur'>Nom d'utilisateur :</label>
+              <input type="text" class="form-control" id="inputAuteur" placeholder="Nom d'utilisateur...">
+              <label for='textAreaContenu'>Contenu du commentaire :</label>
+              <textarea class="form-control" id="textAreaContenu" placeholder="Contenu du commentaire..."></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+            <button type="button" class="btn btn-primary" onclick="posterCommentaire();">Poster !</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
             
-        </script>
-        
     </body>
 </html>

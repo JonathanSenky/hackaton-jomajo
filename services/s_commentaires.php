@@ -38,8 +38,7 @@
             array_push($commentaires, array('auteur'=>$row[1], 'contenu'=>$row[2], 'dateCommentaire'=>$row[3]));
         }
         $req->closeCursor();
-        print_r($commentaires);
-        echo '<br>';
+
         echo json_encode($commentaires);
     }
     
