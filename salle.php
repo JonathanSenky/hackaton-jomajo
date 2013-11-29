@@ -128,15 +128,14 @@
         
         <script>
             var page=1;
-            var results=0;
+            var results=1;
+            var timer=0;
             var idEtape=<?php echo $idEtape;?>;
             var mode='lgt';
             
             function vote(pid, idTypeProposition)
             {
                 $('#myModal').modal('show');
-                console.log('On envoie');
-                console.log('pid : '+pid);
                 $('#vote'+pid).html('Merci de votre vote !').attr('disabled', 'true');
                 var nbVotes = parseInt($('#spanVote'+pid).html()) +1;
                 $('#spanVote'+pid).html(nbVotes);
@@ -157,7 +156,6 @@
                 for(var i=0; i<json.length; i++)
                 {
                     var proposition = json[i];
-                    console.log(proposition);
                     var photos = proposition.photos;
                     var urlPhoto = photos[0].url;
                     var heading = proposition.heading;
@@ -183,9 +181,10 @@
                     
                     
                     $('#tbody').html($('#tbody').html() + '<tr><td>'+htmlImage+'<br><br><center><span style="color:#d2322d;"><strong>Prix : '+prix+'€</strong></span><br><br>'+htmlBoutonVote+'<br><br><strong>Nombre de votes : <span id="spanVote'+pid+'">'+nbVotes+'</span></strong></center></td><td><h3>'+heading+'</h3><br><pre>'+description+'</pre><br>'+htmlBoutonDetails+'</td></tr>');
-                    $('#myModal').modal('hide');
                     //console.log(proposition);
                 }
+                $('#myModal').modal('hide');
+
             }
             
             function genererExperiences(json)
@@ -197,7 +196,6 @@
                 for(var i=0; i<json.length; i++)
                 {
                     var proposition = json[i];
-                    console.log(proposition);
                     var photos = proposition.photos;
                     var urlPhoto = photos[0].photo;
                     var heading = proposition.heading;
@@ -222,9 +220,9 @@
                     
                     
                     $('#tbody').html($('#tbody').html() + '<tr><td>'+htmlImage+'<br><br><center>'+htmlBoutonVote+'<br><br><strong>Nombre de votes : <span id="spanVote'+mid+'">'+nbVotes+'</span></strong></center></td><td><h3>'+heading+'</h3><br><pre>'+description+'</pre><br>'+htmlBoutonDetails+'</td></tr>');
-                    $('#myModal').modal('hide');
                     //console.log(proposition);
                 }
+                $('#myModal').modal('hide');
             }
             
             function genererResto(json)
@@ -281,12 +279,12 @@
             }
                 
              $(function () {
-                setTimeout(function(){results=1;},5000);
+                setTimeout(function(){timer=1;},5000);
                 genererListe('lgt');
                 //$('#myModal').modal('show');
                 var $window = $(window);
                 $window.scroll(function () {
-                 if ($window.height() + $window.scrollTop()== $(document).height() && results==1 && timer=1) {
+                 if ($window.height() + $window.scrollTop()== $(document).height() && results==1 && timer==1) {
                      page++;
                      console.log(page);
                      timer=0;
