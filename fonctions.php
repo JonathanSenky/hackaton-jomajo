@@ -31,10 +31,10 @@ function envoi_mail($sujet,$mess_html,$mess_text,$mail)
 	$mess_text = base64_encode($mess_text);
 	
 	//on compose le header :
-	$email_touch = 'no-reply@touch.esial.net';
+	$email= 'no-reply@GingerCorp';
 	
-	$headers = 'From: "Club Touch"<'.$email_touch.'>'."\n";
-	$headers .= 'Return-Path: <'.$email_touch.'>'."\n";
+	$headers = 'From: "Ginger Corp"<'.$email.'>'."\n";
+	$headers .= 'Return-Path: <'.$email.'>'."\n";
 	$headers .= 'MIME-Version: 1.0'."\n";
 	$headers .= 'Content-Type: multipart/alternative;boundary='.$frontiere."\n";
 	$headers .= 'Content-Transfer-Encoding: base64'."\n\n";
@@ -56,6 +56,36 @@ function envoi_mail($sujet,$mess_html,$mess_text,$mail)
 	$mess .= '--'.$frontiere.'--'."\n";
 	
 	return mail($mail, $sujet, $mess, $headers);
+}
+
+//retourne l'url de base par rapport à l'endroit où l'on est, par exemple si on est sur
+//touch.net/site/test/my_script.php
+//retournera
+//touch.net/site/test/
+function declarer_lien_serveur(){
+	
+	//on récupère le http_host :
+	$http_host = $_SERVER['HTTP_HOST'];
+	
+	//on récupère le REQUEST_URI :
+	$request_uri = $_SERVER['REQUEST_URI'];
+	
+	//on lui enlève ce qu'il y a après le dernier '/' s'il y a quelque chose
+	$tab = explode('/',$request_uri);
+	
+	//on ignore le premier qui est forcément un vide car la chaine commence par '/'
+	//on ignore le dernier car il contient le nom du fichier actuel que l'on ne veut pas récupérer justement
+	
+	$taille_tab = count($tab);
+	$url_de_base = "/";
+	
+	for($i=1;$i<$taille_tab-1;$i++){
+		$url_de_base .= $tab[$i] . '/';
+	}
+	
+	$url_a_retourner = $http_host . $url_de_base;
+	
+	return $url_a_retourner;
 }
 
 ?>

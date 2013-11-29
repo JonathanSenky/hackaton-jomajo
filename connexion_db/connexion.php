@@ -5,7 +5,7 @@
         return $bdd;
     }
     catch(Exception $e)
-    {
+    {z
         die('Erreur : '.$e->getMessage());
     }
 ?>

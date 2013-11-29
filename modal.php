@@ -70,17 +70,20 @@
 			
 			<br />
 			
+			<label for="dest">Destination</label>
+			<input type="text" class="form-control" id="dest" name="dest" placeholder="Entrez une destination">
+			
+			<br />
+			
 			<label for="mail">Votre e-mail</label>
 			<input type="email" class="form-control" id="mailCreateur" name="mailCreateur" placeholder="Entrez votre adresse e-mail">
 			
 			<br />
 			
 			<label for="dateDeb">Date de début</label>
-			<!--<input type="text" class="form-control" id="dateDeb" name="dateDeb" placeholder="Entrez une date de début">-->
 			<input type="text" class="form-control" style="width:110px;display:inline;margin:10px;" name="dateDeb" id="dateDeb" /> 
 			
 			<label for="dateDeb">Date de fin</label>
-			<!--<input type="text" class="form-control" id="dateFin" name="dateFin" placeholder="Entrez une date de fin">-->
 			<input type="text" class="form-control" style="width:110px;display:inline;margin:10px;" name="dateFin" id="dateFin" /> 
 			
 			<br />
