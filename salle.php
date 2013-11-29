@@ -124,7 +124,8 @@
         
         <script>
             var page=1;
-        
+            var results=1;
+            
             function vote(pid, idTypeProposition)
             {
                 console.log('On envoie');
@@ -137,6 +138,10 @@
             
             function genererLogements(json)
             {
+                if(json.length=0)
+                {
+                    results=0;
+                }
                 for(var i=0; i<json.length; i++)
                 {
                     var proposition = json[i];
@@ -151,10 +156,12 @@
                     var provider = proposition.provider;
                     
                     var htmlImage = '<img class="vignette" src="'+urlPhoto+'">';
+                    var htmlBoutonCarousel;
+                    var htmlBoutonDetails = '<a href="'+lien+'" target="_blank" class="btn btn-info">Plus de détails</a>';
                     var htmlBoutonVote = '<button type="button" class="btn btn-success" onclick="vote(\''+pid+'\', 1);">Votez</button>';
                     
                     
-                    $('#tbody').html($('#tbody').html() + '<tr><td>'+htmlImage+'</td><td><h3>'+heading+'</h3><br><pre>'+description+'</pre><br>'+htmlBoutonVote+'</td></tr>');
+                    $('#tbody').html($('#tbody').html() + '<tr><td>'+htmlImage+'</td><td><h3>'+heading+'</h3><br><pre>'+description+'</pre><br>'+htmlBoutonVote+'&nbsp;'+htmlBoutonDetails+'</td></tr>');
                     
                     //console.log(proposition);
                 }
@@ -175,6 +182,7 @@
             
             function genererListe(mode)
             {
+                console.log('Coucou');
                 $('#liLgt').removeClass('active');
                 $('#liExp').removeClass('active');
                 $('#liResto').removeClass('active');
@@ -201,8 +209,16 @@
                             break;
                 }
             }
-            
-            genererListe('lgt');
+                
+             $(function () {
+                genererListe('lgt');
+             var $window = $(window);
+             $window.scroll(function () {
+                 if ($window.height() + $window.scrollTop()== $(document).height() && results==1) {
+                     alert('Scroll en bas de page');
+                 }
+             });
+         });
         </script>
         
     </body>
