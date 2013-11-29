@@ -1,16 +1,12 @@
 <?php
-	include_once('fonctions.php');
-	$test = declarer_lien_serveur();
 	
-	echo $test;
-	/*
-	//sécurisation
+	//sÃ©curisation
 	if(!isset($_POST['nomSalle']) || empty($_POST['nomSalle']) || !isset($_POST['mailCreateur']) || empty($_POST['mailCreateur']) || !isset($_POST['dateDeb']) || empty($_POST['dateDeb']) || !isset($_POST['dateFin']) || empty($_POST['dateFin']) || !isset($_POST['dest']) || empty($_POST['dest'])){
 		header('location:erreur.php?erreur=vide_sauf_partage');
 		exit;
 	}
 	
-	//récupération des variables
+	//rÃ©cupÃ©ration des variables
 	$nomSalle = $_POST['nomSalle'];
 	$mailCreateur = $_POST['mailCreateur'];
 	$dest = $_POST['dest'];
@@ -19,12 +15,12 @@
 	$dateDeb = $_POST['dateDeb'];
 	$dateFin = $_POST['dateFin'];
 	
-	//vérification de la validité des dates
+	//vÃ©rification de la validitÃ© des dates
 	$tabDateDeb = explode('-',$dateDeb);
 	$tabDateFin = explode('-',$dateFin);
 	
 	if(count($tabDateDeb) == 3 || count($tabDateFin) == 3){
-		//checkdate(mois,jour,année)
+		//checkdate(mois,jour,annÃ©e)
 		if(!checkdate($tabDateDeb[1],$tabDateDeb[2],$tabDateDeb[0]) || !checkdate($tabDateFin[1],$tabDateFin[2],$tabDateFin[0])){
 			//date fausse
 			header('location:erreur.php?erreur=format_date');
@@ -42,7 +38,7 @@
 	include_once("fonctions.php");
 	include_once("connexion_db/connexion.php");
 	
-	//on crée une url unique pour la salle (et on vérifie qu'il n'y a pas déjà une salle avec cet id)
+	//on crÃ©e une url unique pour la salle (et on vÃ©rifie qu'il n'y a pas dÃ©jÃ© une salle avec cet id)
 	do
 	{
 		$lienSalle = generate_link();
@@ -62,24 +58,24 @@
 	$idSalle = $bdd->lastinsertid();
 	$req_ajout_salle->closeCursor();
 	
-	echo $idSalle;
-	
-	//ajout de l'étape
+	//ajout de l'Ã©tape
 	$req_ajout_etape = $bdd->prepare("INSERT INTO etapes VALUES ('',?,?,?,?)");
 	$req_ajout_etape->execute(array($idSalle,$dest,$dateDeb,$dateFin));
 	$req_ajout_etape->closeCursor();
 	
 	//envoi des mails
-		//envoi du mail pour le créateur
-		$sujet = "Création de la salle réussie !";
+		$lienServeur = declarer_lien_serveur();
+		$urlSite = $lienServeur . "salle.php?lienSalle=" . $lienSalle;
+		//envoi du mail pour le crÃ©ateur
+		$sujet = "CrÃ©ation de la salle rÃ©ussie !";
 		
-		$mess_text_createur = "Bonjour,\n\nVotre salle a bien été créée, un mail a aussi été envoyé aux personnes avec qui vous vouliez la partager.
+		$mess_text_createur = "Bonjour,\n\nVotre salle a bien Ã©tÃ© crÃ©Ã©e, un mail a aussi Ã©tÃ© envoyÃ© aux personnes avec qui vous vouliez la partager. Cette salle vous permet de discuter ensemble de l'organisation d'un voyage Ã  $dest.
 		\n\n
-		Pour rejoindre la salle veuillez suivre le lien suivant : <a href='$lienSalle'>$lienSalle</a> 
+		Pour rejoindre la salle veuillez suivre le lien suivant : <a href='$urlSite'>$urlSite</a> 
 		\n\n
 		(Si vous ne pouvez pas cliquer sur le lien copier-coller le dans la barre d'adresse de votre navigateur)";
 		
-		$mess_html_createur = "<html><body>Bonjour,<br /><br />Votre salle a bien été créée, un mail a aussi été envoyé aux personnes avec qui vous vouliez les partager.
+		$mess_html_createur = "<html><body>Bonjour,<br /><br />Votre salle a bien Ã©tÃ© crÃ©Ã©e, un mail a aussi Ã©tÃ© envoyÃ© aux personnes avec qui vous vouliez la partager. Cette salle vous permet de discuter ensemble de l'organisation d'un voyage Ã  <b>$dest</b>.
 		<br /><br />
 		Pour rejoindre la salle veuillez suivre le lien suivant : <a href='$lienSalle'>$lienSalle</a> 
 		<br /><br />
@@ -87,15 +83,40 @@
 		
 		</body></html>";
 		
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		envoi_mail($sujet,$mess_text_createur,$mess_html_createur,$mailCreateur);
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		
-		//envoi des mails pour le partage (si indiqué)
-		/*
-		$tab = array();
-		$tab = $_POST['mail'];
-		echo "taille = ".count($tab)."<br />";
-		print_r($tab);
-		*/
+		//envoi des mails pour le partage (si indiquÃ©)
+		
+		
+		if(isset($_POST['mail'])){
+			$tab = $_POST['mail'];
+			
+			for($i=0;$i<count($tab);$i++){
+				if(isset($tab[$i]) && !empty($tab[$i])){
+					//envoi du mail pour un partage
+					$sujet_partage = "On vous a invitÃ© Ã  un partage sur Ginger Corp !";
+					
+					$mess_text_partage = "Bonjour,\n\nUne personne vous a envoyÃ© une invitation Ã  rejoindre une salle de discussion pour organiser un voyage Ã  $dest.
+					\n\n
+					Pour rejoindre la salle veuillez suivre le lien suivant : <a href='$urlSite'>$urlSite</a> 
+					\n
+					(Si vous ne pouvez pas cliquer sur le lien copier-coller le dans la barre d'adresse de votre navigateur)";
+					
+					$mess_html_partage = "<html><body>Bonjour,<br /><br />Une personne vous a envoyÃ© une invitation Ã  rejoindre une salle de discussion pour organiser un voyage Ã  <b>$dest</b>.
+					<br />
+					Pour rejoindre la salle veuillez suivre le lien suivant : <a href='$lienSalle'>$lienSalle</a> 
+					<br />
+					(Si vous ne pouvez pas cliquer sur le lien copier-coller le dans la barre d'adresse de votre navigateur)
+					
+					</body></html>";
+					
+					envoi_mail($sujet_partage,$mess_text_partage,$mess_html_partage,$tab[$i]);
+				}
+			}
+		}
+		
 	
 	
 ?>
