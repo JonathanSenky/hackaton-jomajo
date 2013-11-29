@@ -1,6 +1,6 @@
 <?php
 
-//fonction qui génère un lien avec une approche probabiliste (on génère des chaines aléatoires jusqu'a ce qu'elle passe => non existant dans la BdD)
+//fonction qui gÃ©nÃ¨re un lien avec une approche probabiliste (on gÃ©nÃ¨re des chaines alÃ©atoires jusqu'a ce qu'elle passe => non existant dans la BdD)
 function generate_link()
 {
 	$size=32;
@@ -18,11 +18,11 @@ function generate_link()
 	return $res;
 }
 
-//fonction permettant d'envoyer un mail avec comme sujet $sujet, comme adresse de destinataire $mail et avec comme message $mess_text pour une première version texte et $mess_html pour une deuxième version en html
+//fonction permettant d'envoyer un mail avec comme sujet $sujet, comme adresse de destinataire $mail et avec comme message $mess_text pour une premiÃ¨re version texte et $mess_html pour une deuxiÃ¨me version en html
 function envoi_mail($sujet,$mess_html,$mess_text,$mail)
 {
 	
-	//generation de la frontière entre html et text
+	//generation de la frontiÃ¨re entre html et text
 
 	$frontiere = md5(uniqid(mt_rand()));
 	
@@ -42,14 +42,14 @@ function envoi_mail($sujet,$mess_html,$mess_text,$mail)
 	//message text :
 	
 	$mess = '--'.$frontiere."\r\n";
-	$mess .= 'Content-Type: text/plain; charset="ISO-8859-1"'."\n";
+	$mess .= 'Content-Type: text/plain; charset="iso-8859-1"'."\n";
 	$mess .= 'Content-Transfer-Encoding: base64'."\n\n";
 	$mess .= $mess_text."\n\n"; 
 	
 	//message html
 	
 	$mess .= '--'.$frontiere."\r\n";
-	$mess .= 'Content-Type: text/html; charset="ISO-8859-1"'."\n";
+	$mess .= 'Content-Type: text/html; charset="iso-8859-1"'."\n";
 	$mess .= 'Content-Transfer-Encoding: base64'."\n\n";
 	$mess .= $mess_html."\n\n";
 	
@@ -58,23 +58,23 @@ function envoi_mail($sujet,$mess_html,$mess_text,$mail)
 	return mail($mail, $sujet, $mess, $headers);
 }
 
-//retourne l'url de base par rapport à l'endroit où l'on est, par exemple si on est sur
+//retourne l'url de base par rapport Ã  l'endroit oÃ¹ l'on est, par exemple si on est sur
 //touch.net/site/test/my_script.php
 //retournera
 //touch.net/site/test/
 function declarer_lien_serveur(){
 	
-	//on récupère le http_host :
+	//on rÃ©cupÃ¨re le http_host :
 	$http_host = $_SERVER['HTTP_HOST'];
 	
-	//on récupère le REQUEST_URI :
+	//on rÃ©cupÃ¨re le REQUEST_URI :
 	$request_uri = $_SERVER['REQUEST_URI'];
 	
-	//on lui enlève ce qu'il y a après le dernier '/' s'il y a quelque chose
+	//on lui enlÃ¨ve ce qu'il y a aprÃ¨s le dernier '/' s'il y a quelque chose
 	$tab = explode('/',$request_uri);
 	
-	//on ignore le premier qui est forcément un vide car la chaine commence par '/'
-	//on ignore le dernier car il contient le nom du fichier actuel que l'on ne veut pas récupérer justement
+	//on ignore le premier qui est forcÃ©ment un vide car la chaine commence par '/'
+	//on ignore le dernier car il contient le nom du fichier actuel que l'on ne veut pas rÃ©cupÃ¨rer justement
 	
 	$taille_tab = count($tab);
 	$url_de_base = "/";
