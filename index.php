@@ -61,7 +61,7 @@
 		<!-- Logo -->
 		<img src="images/logo_ginger_corp.png" style="display:inline;"/>
 		<b><h1 style="display:inline;margin-left:20px;color:white;font-weight:bold;">Ginger Corp</h1></b><br />
-
+		
 		</div>
 	</div>
 </header>
@@ -98,29 +98,29 @@
 		<div class="row">
 			<div class="col-sm-6">
 				<blockquote class="t-1">
-				<p>From the beginning, Hackaton just made sense to me. It's just a great web app base that we've worked during 2 days xD.</p>
-				<small>Ginger Guy</small>
+				<p>"Si ça fait mal, faites le...en 36 heures."</p>
+				<small>Jonathan SENKY</small>
 				</blockquote>
 			</div>
 			
 			<div class="col-sm-6">
 				<blockquote class="t-1">
-				<p>From the beginning, Hackaton just made sense to me. It's just a great web app base that we've worked during 2 days xD.</p>
-				<small>Ginger Guy</small>
+				<p>"Pas d'bras, pas d'chocolats. Pas d'roux, pas d'hackathon."</p>
+				<small>Jonathan DELAMARE</small>
 				</blockquote>
 			</div>
 			
 			<div class="col-sm-6">
 				<blockquote class="t-2">
-				<p>It's a great experience to work on team to don't see people with you work :) </p>
-				<small>Charly</small>
+				<p>Commit du soir, espoir. Build du matin, chagrin T_T</p>
+				<small>Matthieu NICOLAS</small>
 				</blockquote>
 			</div>
 			
 			<div class="col-sm-6">
 				<blockquote class="t-2">
-				<p>It's a great experience to work on team to don't see people with you work :) </p>
-				<small>Charly</small>
+				<p></p>
+				<small>Charles BESSONNET</small>
 				</blockquote>
 			</div>
 		</div>

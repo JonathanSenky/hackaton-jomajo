@@ -1,5 +1,7 @@
 <?php
     include_once('../connexion_db/connexion.php');
+
+error_reporting(e_all);
 	
     if(isset($_GET['mode']) && !empty($_GET['mode']))
     {
@@ -30,12 +32,12 @@
     function recup_commentaires($idSalle)
     {
         global $bdd;
-        $req = $bdd->prepare('SELECT idCommentaire, auteur, contenu, dateCommentaire FROM commentaires WHERE idSalle=?');
+        $req = $bdd->prepare('SELECT idCommentaire, auteur, contenu, dateCommentaire FROM commentaires WHERE idSalle=? ORDER BY dateCommentaire DESC');
         $req->execute(array($idSalle));
         $commentaires = array();
         while($row=$req->fetch())
         {
-            array_push($commentaires, array('auteur'=>$row[1], 'contenu'=>nl2br(wordwrap($row[2], 30, '<br>', true)), 'dateCommentaire'=>$row[3]));
+            array_push($commentaires, array('auteur'=>nl2br(wordwrap($row[1], 30, '<br>', true)), 'contenu'=>nl2br(wordwrap($row[2], 30, '<br>', true)), 'dateCommentaire'=>$row[3]));
         }
         $req->closeCursor();
 

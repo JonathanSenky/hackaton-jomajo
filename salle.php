@@ -110,9 +110,10 @@
                             <br>
                             <h3 style="font-weight:bold;">Liste des <span id="spanType">logements</span> :</h3>
                             <form class="">
-                                <input id="ordrePrix" type="text" class="form-control" placeholder="Saisissez un prix maximum">
-                                <button type="button" class="btn" onclick="remiseZero(mode);">Rechercher</button>
+                                <input id="ordrePrix" type="text" class="form-control" placeholder="Saisissez un prix maximum" style="width:200px;display:inline;" >
+                                <button type="button" class="btn btn-info" onclick="remiseZero(mode);">Rechercher</button>
                             </form>
+							<br />
                             <table class="table table-stripped table-condensed">
                                 <thead>
                                     <th>Image</th>
@@ -126,11 +127,12 @@
                 </div> <!-- Fin colonne de gauche -->
                 <div class="col-md-3">
                     <h3><strong>Commentaires : </strong></h3>
-                    <div id="divCommentaires">
-                    </div>
-                    <center>
+					<center>
                         <button class="btn btn-info" data-toggle="modal" data-target="#modalCommentaire">Ajouter un commentaire</button>
                     </center>
+					<br />
+                    <div id="divCommentaires">
+                    </div>
                 </div>
             </div>
         </div>
@@ -157,7 +159,7 @@
                 var nbVotes = parseInt($('#spanVote'+pid).html()) +1;
                 $('#spanVote'+pid).html(nbVotes);
                 localStorage[pid] = true;
-                $.get('bdd_vote.php?idProposition='+encodeURIComponent(pid)+'&idEtape=1&idTypeProposition='+encodeURIComponent(idTypeProposition), function success(data)
+                $.get('bdd_vote.php?idProposition='+pid+'&idEtape=1&idTypeProposition='+idTypeProposition, function success(data)
                        {
                            $('#myModal').modal('hide');
                            console.log('Vote pris en compte');
@@ -170,7 +172,7 @@
                $('#myModal').modal('show');                
                 var auteur=$('#inputAuteur').val();
                 var contenu=$('#textAreaContenu').val();
-                $.get('services/s_commentaires.php?mode=post&idSalle='+encodeURIComponent(idSalle)+'&auteur='+encodeURIComponent(auteur)+'&contenu='+encodeURIComponent(contenu), function (json)
+                $.get('services/s_commentaires.php?mode=post&idSalle='+idSalle+'&auteur='+auteur+'&contenu='+contenu, function (json)
                           {
                                 $('#inputAuteur').val('');
                                 $('#textAreaContenu').val('');
@@ -180,7 +182,7 @@
             
 	        function recupCommentaires(flag)
             {
-                $.getJSON('services/s_commentaires.php?mode=get&idSalle='+encodeURIComponent(idSalle), function (json)
+                $.getJSON('services/s_commentaires.php?mode=get&idSalle='+idSalle, function (json)
                           {
                                 var html;
                                 console.log(json);
@@ -327,11 +329,11 @@
                 {
                         case 'lgt':
                             $('#liLgt').addClass('active');
-                            $.getJSON('services/s_appel_recup.php?mode=lgt&idEtape='+encodeURIComponent(idEtape)+'&page='+encodeURIComponent(page)+'&ordrePrix='+encodeURIComponent(ordrePrix), genererLogements);
+                            $.getJSON('services/s_appel_recup.php?mode=lgt&idEtape='+idEtape+'&page='+page+'&ordrePrix='+ordrePrix, genererLogements);
                             break;
                         case 'exp':
                             $('#liExp').addClass('active');
-                            $.getJSON('services/s_appel_recup.php?mode=exp&idEtape='+encodeURIComponent(idEtape)+'&page='+encodeURIComponent(page), genererExperiences);
+                            $.getJSON('services/s_appel_recup.php?mode=exp&idEtape='+idEtape+'&page='+page, genererExperiences);
                             break;
                         case 'resto':
                             $('#liResto').addClass('active');
@@ -343,9 +345,6 @@
                 setTimeout(function(){timer=1;},5000);
                 genererListe('lgt');
 				recupCommentaires();
-                window.setInterval(function() {
-                    recupCommentaires();
-                }, 300000);
                 //$('#myModal').modal('show');
                 var $window = $(window);
                 $window.scroll(function () {
