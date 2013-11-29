@@ -1,6 +1,11 @@
 <?php
     include_once('../connexion_db/connexion.php');
 
+	// Afficher les erreurs à l'écran
+ini_set('display_errors', 1);
+// Afficher les erreurs et les avertissements
+error_reporting(e_all);
+	
     if(isset($_GET['mode']) && !empty($_GET['mode']))
     {
         if(isset($_GET['idSalle']) && is_numeric($_GET['idSalle']))
@@ -45,7 +50,7 @@
     function post_commentaire($idSalle, $auteur, $contenu)
     {
         global $bdd;
-        $req = $bdd->prepare('INSERT INTO Commentaires VALUES (NULL, ?, ?, ?, ?);');
+        $req = $bdd->prepare('INSERT INTO commentaires VALUES (NULL, ?, ?, ?, ?);');
         $req->execute(array($idSalle, $auteur, $contenu, date('Y-m-d H:i:s')));
         $req->closeCursor();
     }

@@ -173,9 +173,8 @@
                 $.get('services/s_commentaires.php?mode=post&idSalle='+idSalle+'&auteur='+auteur+'&contenu='+contenu, function (json)
                           {
                                 $('#inputAuteur').val('');
-                                $('#textAreaContenu').val('');                              
+                                $('#textAreaContenu').val('');
                                 recupCommentaires(1);
-                              console.log('Ben merde :o');
                           });
             }
             
