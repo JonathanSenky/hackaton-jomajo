@@ -27,40 +27,46 @@
 	}
 	
 	// Récupère la liste des logements avec en tête de liste les logements les plus plussoyés
-	function recup_logements($id_etape, $page = 1, $ordre_prix = 0)
-	{
-		global $bdd;
-		
-		$req = $bdd->prepare('SELECT destination, dateDebut, dateFin FROM etapes WHERE idEtape=?');
+    function recup_logements($id_etape, $page = 1, $ordre_prix = 0)
+    {
+        global $bdd;
+    
+        $req = $bdd->prepare('SELECT destination, dateDebut, dateFin FROM etapes WHERE idEtape=?');
         $req->execute(array($id_etape));
-		
+        
         $etape = $req->fetchAll();
-		
-		$req->closeCursor();
-		
-		$logements_bdd = json_decode(recup_logements_bdd($id_etape, $page));
-		$logements_api = json_decode(recup_logements_api($etape[0]['destination'], $etape[0]['dateDebut'], $etape[0]['dateFin'], $page));
-		
-		$res = array();
-		
-		if($page == 1)
-		{
-			foreach($logements_bdd as $num_logement => $logement)
-			{
-				array_push($res, $logement);
-			}
-		}
-		
-		foreach($logements_api as $num_logement => $logement)
-		{
-			if(!in_array($logement, $res) && $logement->price > $ordre_prix)
-			{
-				array_push($res, $logement);
-			}
-		}
-		
-		return json_encode($res);
-	}
+        
+        $req->closeCursor();
+        
+        $logements_bdd = json_decode(recup_logements_bdd($id_etape, $page));
+        $logements_api = json_decode(recup_logements_api($etape[0]['destination'], $etape[0]['dateDebut'], $etape[0]['dateFin'], $page));
+        
+        $res = array();
+        $temp = array();
+        
+        foreach($logements_bdd as $num_logement => $logement)
+        {
+            array_push($temp, $logement);
+        }
+        
+        if($page == 1)
+        {
+            foreach($logements_bdd as $num_logement => $logement)
+            {
+                array_push($res, $logement);
+            }
+        }
+        
+        foreach($logements_api as $num_logement => $logement)
+        {
+            if(!in_array($logement, $temp) && $logement->price <= $ordre_prix)
+            {
+                array_push($res, $logement);
+            }
+        }
+        
+        return json_encode($res);
+    }
 	
 	// Récupère la liste des logements avec en tête de liste les logements les plus plussoyés
 	function recup_experiences($id_etape, $page = 1)

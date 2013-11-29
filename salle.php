@@ -37,7 +37,7 @@
                 $erreur='lien_vide';
             }
 
-            if($erreur!=1)
+            if($erreur!=0)
             {
                 //On redirige sur la page
                 header('location:erreur.php?erreur='.$erreur);
@@ -50,7 +50,7 @@
         
         <!-- Bootstrap core CSS -->
         <link href="css/bootstrap.css" rel="stylesheet">
-
+        <link href="css/main.css" rel="stylesheet">
         
         <!-- Just for debugging purposes. Don't actually copy this line! -->
         <!--[if lt IE 9]><script src="../../docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -89,10 +89,23 @@
                     <div> <!-- Liste des propositions -->
                         <div> <!-- Onglets -->
                             <ul class="nav nav-tabs nav-justified">
-                                <li class="active"><a href="#">Logements</a></li>
-                                <li><a href="#">Expériences</a></li>
-                                <li><a href="#">Restaurants</a></li>
+                                <li id="liLgt" class="active"><a href="#" onclick="genererListe('lgt')">Logements</a></li>
+                                <li id="liExp"><a href="#" onclick="genererListe('exp')">Expériences</a></li>
+                                <li id="liResto"><a href="#" onclick="genererListe('resto')">Restaurants</a></li>
                             </ul>
+                        </div>
+                        <div><!-- Liste des propositions -->
+                            <br>
+                            <h3>Liste des <span id="spanType">logements</span></h3>
+                            <input id="ordrePrix" type="text" class="form-control" placeholder="Saisissez un prix maximum">
+                            <table class="table table-stripped table-condensed">
+                                <thead>
+                                    <th>Image</th>
+                                    <th>Description</th>
+                                </thead>
+                                <tbody id="tbody">
+                                </tbody>
+                            </table>
                         </div>
                     </div> <!-- Fin liste des propositions -->
                 </div> <!-- Fin colonne de gauche -->
@@ -102,60 +115,95 @@
             </div>
         </div>
         
-            <!--
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <th>Image</th>
-                            <th>Intitulé Promotion</th>
-                            <th>Etablissement</th>
-                            <th>Date début</th>
-                            <th>Date fin</th>
-                            <th>Lien vers promotion</th>
-                            <th>Consulter la note</th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><img class="vignette" src="img/sales.png"></td>
-                                <td>Promo en attente 1</td>
-                                <td>Cafe 2</td>
-                                <td>13/03/2014</td>
-                                <td>17/03/2014</td>
-                                <td><a href="#">Description</a></td>
-                                <td><img class="vignette note" src="img/note.png" data-toggle="modal" data-target="#modalValidation"></td>
-                            <tr>
-                                <td><img class="vignette" src="img/sales.png"></td>
-                                <td>Promo en attente 2</td>
-                                <td>Cafe 3</td>
-                                <td>13/03/2014</td>
-                                <td>17/03/2014</td>
-                                <td><a href="#">Description</a></td>
-                                <td><img class="vignette" src="img/note.png"></td>
-                            </tr>
-                            <tr>
-                                <td><img class="vignette" src="img/sales.png"></td>
-                                <td>Promo en attente 3</td>
-                                <td>Hôtel 1</td>
-                                <td>13/03/2014</td>
-                                <td>17/03/2014</td>
-                                <td><a href="#">Description</a></td>
-                                <td><img class="vignette" src="img/note.png"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                -->
-                <?php
-                    //include_once('footer.php');
-                ?>
-        <div>
-        
-        </div>
     
         <!-- Bootstrap core JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
+        
+        <script>
+            var page=1;
+        
+            function vote(pid, idTypeProposition)
+            {
+                console.log('On envoie');
+                console.log('pid : '+pid);
+                $.get('bdd_vote.php?idProposition='+pid+'&idEtape=1&idTypeProposition='+idTypeProposition, function success(data)
+                       {
+                           console.log('Vote pris en compte');
+                       });
+            }
+            
+            function genererLogements(json)
+            {
+                for(var i=0; i<json.length; i++)
+                {
+                    var proposition = json[i];
+                    console.log(proposition);
+                    var photos = proposition.photos;
+                    var urlPhoto = photos[0].url;
+                    var heading = proposition.heading;
+                    var description = proposition.description;
+                    var lien = proposition.link;
+                    var nbVotes = proposition.nb_votes;
+                    var pid = proposition.pid;
+                    var provider = proposition.provider;
+                    
+                    var htmlImage = '<img class="vignette" src="'+urlPhoto+'">';
+                    var htmlBoutonVote = '<button type="button" class="btn btn-success" onclick="vote(\''+pid+'\', 1);">Votez</button>';
+                    
+                    
+                    $('#tbody').html($('#tbody').html() + '<tr><td>'+htmlImage+'</td><td><h3>'+heading+'</h3><br><pre>'+description+'</pre><br>'+htmlBoutonVote+'</td></tr>');
+                    
+                    //console.log(proposition);
+                }
+            }
+            
+            function genererExperiences(json)
+            {
+                for(var i=0; i<json.length; i++)
+                {
+                    var proposition = json[i];
+                    console.log(proposition);
+                }
+            }
+            
+            function genererResto(json)
+            {
+            }
+            
+            function genererListe(mode)
+            {
+                $('#liLgt').removeClass('active');
+                $('#liExp').removeClass('active');
+                $('#liResto').removeClass('active');
+                
+                $('#tbody').html('');
+                var ordrePrix = $('#ordrePrix').val();
+                if(!ordrePrix || ordrePrix==0)
+                {
+                    ordrePrix=9999999999999;
+                }
+
+                switch(mode)
+                {
+                        case 'lgt':
+                            $('#liLgt').addClass('active');
+                            $.getJSON('services/s_appel_recup.php?mode=lgt&idEtape=1&page='+page+'&ordrePrix='+ordrePrix, genererLogements);
+                            break;
+                        case 'exp':
+                            $('#liExp').addClass('active');
+                            $.getJSON('services/s_appel_recup.php?mode=exp&idEtape=1&page='+page, genererExperiences);
+                            break;
+                        case 'resto':
+                            $('#liResto').addClass('active');
+                            break;
+                }
+            }
+            
+            genererListe('lgt');
+        </script>
+        
     </body>
 </html>

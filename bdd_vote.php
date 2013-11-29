@@ -3,7 +3,7 @@
     $idProposition = $_GET['idProposition'];
     $idEtape = $_GET['idEtape'];
     $idTypeProposition = $_GET['idTypeProposition'];
-    
+
     //verifie si la ligne existe dans la BD
     
     //include
@@ -11,7 +11,6 @@
     
     $req = $bdd->prepare('SELECT votePlus FROM propositions WHERE idProposition=? and idEtape=? and idTypeProposition=?');
     $req->execute(array($idProposition, $idEtape, $idTypeProposition));
-    echo $req->rowCount();
     if($req->rowCount()>0)
     {
         //set la valeur de plus a set +1
