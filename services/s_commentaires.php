@@ -35,7 +35,7 @@
         $commentaires = array();
         while($row=$req->fetch())
         {
-            array_push($commentaires, array('auteur'=>$row[1], 'contenu'=>nl2br($row[2]), 'dateCommentaire'=>$row[3]));
+            array_push($commentaires, array('auteur'=>$row[1], 'contenu'=>nl2br(wordwrap($row[2], 30, '<br>', true)), 'dateCommentaire'=>$row[3]));
         }
         $req->closeCursor();
 
