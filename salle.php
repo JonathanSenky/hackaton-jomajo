@@ -64,14 +64,25 @@
     </head>
     
     <body>
+	
+		<header style="background: #27ae60;">
+			<div class="container">
+				<div itemscope itemtype="http://schema.org/Organization">
+
+				<!-- Logo -->
+				<img src="images/logo_ginger_corp.png" style="display:inline;"/>
+				<b><h1 style="display:inline;margin-left:20px;color:white;font-weight:bold;">Ginger Corp - Salle : <?php echo $nomSalle;?></h1></b><br />
+
+				</div>
+			</div>
+		</header>
+	
+	
         <div class="col-md-10 col-md-offset-1">
-            <div class="page-header">
-                  <h1><?php echo $nomSalle;?> <!--<small>Subtext for header</small>--></h1>
-            </div>
             <div class="row">
                 <div class="col-md-9"> <!-- Colonne de gauche -->
                     <div> <!--- Partie description de la page -->
-                        <h3>Description du voyage :</h3>
+                        <h3 style="font-weight:bold;">Description du voyage :</h3>
                         <br>
                         <table class="table table-striped table-condensed">
                             <tbody>
@@ -97,7 +108,7 @@
                         </div>
                         <div><!-- Liste des propositions -->
                             <br>
-                            <h3>Liste des <span id="spanType">logements</span></h3>
+                            <h3 style="font-weight:bold;">Liste des <span id="spanType">logements</span> :</h3>
                             <form class="">
                                 <input id="ordrePrix" type="text" class="form-control" placeholder="Saisissez un prix maximum">
                                 <button type="button" class="btn" onclick="remiseZero(mode);">Rechercher</button>

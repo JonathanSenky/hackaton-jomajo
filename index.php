@@ -55,28 +55,17 @@
 <body class="home page">
 
 <header class="banner" role="banner">
-<div class="container">
-<div itemscope itemtype="http://schema.org/Organization">
+	<div class="container">
+		<div itemscope itemtype="http://schema.org/Organization">
 
-<!-- Logo -->
-<img src="images/logo_ginger_corp.png" style="display:inline;"/>
-<b><h1 style="display:inline;margin-left:20px;color:white;font-weight:bold;">Ginger Corp</h1></b><br />
+		<!-- Logo -->
+		<img src="images/logo_ginger_corp.png" style="display:inline;"/>
+		<b><h1 style="display:inline;margin-left:20px;color:white;font-weight:bold;">Ginger Corp</h1></b><br />
 
-</div>
-
-<!--
-<nav class="nav-main" role="navigation">
-<ul id="menu-primary-navigation" class="nav"><li class="menu-docs"><a href="/docs/">Docs</a></li>
-<li class="menu-themes"><a href="/themes/">Themes</a></li>
-<li class="menu-screencasts"><a href="/screencasts/">Screencasts</a></li>
-<li class="menu-plugins"><a href="/plugins/">Plugins</a></li>
-<li class="menu-blog"><a href="/blog/">Blog</a></li>
-<li class="menu-community"><a href="/community/">Community</a></li>
-</ul>
-</nav>
--->
-</div>
+		</div>
+	</div>
 </header>
+
 <div class="wrap " role="document">
 <div class="content ">
 <main class="main col-lg-12" role="main">
@@ -104,39 +93,46 @@
 
 
 <section class="testimonials">
-<div class="container">
-<h2>Hackathon ?</h2>
-<div class="row">
-<div class="col-sm-6">
-<blockquote class="t-1">
-<p>From the beginning, Hackaton just made sense to me. It's just a great web app base that we've worked during 2 days xD.</p>
-<small>Ginger Guy</small>
-</blockquote>
-</div>
-<div class="col-sm-6">
-<blockquote class="t-2">
-<p>It's a great experience to work on team to don't see people with you work :) </p>
-<small>Charly</small>
-</blockquote>
-
-<div class="row">
-<div class="col-lg-12">
-<blockquote class="t-3">
-<p>huuu hiii huuu hiii hiihuuu hiii huuu hiii hiii hiihuuu hiii</p>
-<small><img src="http://www.gravatar.com/avatar/b1bcef210fbb8c637928f7212140ed33?s=80&d=mm&r=g" width="45" height="45" class="img-circle"> <a href="http://simonalex.com/">Trololo </a></small>
-</blockquote>
-</div>
-</div>
-</div>
+	<div class="container">
+		<h2>Hackathon 2013</h2>
+		<div class="row">
+			<div class="col-sm-6">
+				<blockquote class="t-1">
+				<p>From the beginning, Hackaton just made sense to me. It's just a great web app base that we've worked during 2 days xD.</p>
+				<small>Ginger Guy</small>
+				</blockquote>
+			</div>
+			
+			<div class="col-sm-6">
+				<blockquote class="t-1">
+				<p>From the beginning, Hackaton just made sense to me. It's just a great web app base that we've worked during 2 days xD.</p>
+				<small>Ginger Guy</small>
+				</blockquote>
+			</div>
+			
+			<div class="col-sm-6">
+				<blockquote class="t-2">
+				<p>It's a great experience to work on team to don't see people with you work :) </p>
+				<small>Charly</small>
+				</blockquote>
+			</div>
+			
+			<div class="col-sm-6">
+				<blockquote class="t-2">
+				<p>It's a great experience to work on team to don't see people with you work :) </p>
+				<small>Charly</small>
+				</blockquote>
+			</div>
+		</div>
+	</div>
 </section>
-</div>
-</div>
 
 <footer class="content-info" role="contentinfo">
-<div class="container">
+	<div class="container">
 
-<p>&copy; 2013 Ginger Corp &middot; <a href="/privacy/">Privacy Policy</a></p>
-</div>
+		<p style="font-size:16px;" >&copy; 2013 Ginger Corp &middot;</p>
+
+	</div>
 </footer>
 
 <script src="/assets/js/1f7070be.scripts.min.js"></script>
