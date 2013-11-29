@@ -5,6 +5,45 @@
 <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
 
 <title>Hackaton</title>
+<?php
+	include_once("include_scripts.php");
+?>
+<script src="js/jquery-2.0.3.min.js" ></script>
+<link rel="stylesheet" href="css/jquery-ui.css" />
+<script src="js/jquery-ui.js"></script>
+<script>
+  //mettre le calendrier en français
+  $(function() {
+    $( "#dateDeb" ).datepicker( $.datepicker.regional[ "fr" ] );
+  });
+  
+  $(function() {
+    $( "#dateFin" ).datepicker( $.datepicker.regional[ "fr" ] );
+  });
+  
+  jQuery(function($){
+	$.datepicker.regional['fr'] = {
+		closeText: 'Fermer',
+		prevText: 'Précédent',
+		nextText: 'Suivant',
+		currentText: 'Aujourd\'hui',
+		monthNames: ['Janvier','Février','Mars','Avril','Mai','Juin',
+		'Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+		monthNamesShort: ['Janv.','Févr.','Mars','Avril','Mai','Juin',
+		'Juil.','Août','Sept.','Oct.','Nov.','Déc.'],
+		dayNames: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
+		dayNamesShort: ['Dim.','Lun.','Mar.','Mer.','Jeu.','Ven.','Sam.'],
+		dayNamesMin: ['D','L','M','M','J','V','S'],
+		weekHeader: 'Sem.',
+		dateFormat: 'yy-mm-dd',
+		firstDay: 1,
+		isRTL: false,
+		showMonthAfterYear: false,
+		yearSuffix: ''};
+		$.datepicker.setDefaults($.datepicker.regional['fr']);
+	});
+</script>
+
 </head>
 
 <body>
@@ -29,15 +68,22 @@
 			<label for="nomSalle">Nom de la salle</label>
 			<input type="text" class="form-control" id="nomSalle" name="nomSalle" placeholder="Entrez un nom de salle">
 			
+			<br />
+			
 			<label for="mail">Votre e-mail</label>
-			<input type="email" class="form-control" id="mail" name="mail" placeholder="Entrez votre adresse e-mail">
+			<input type="email" class="form-control" id="mailCreateur" name="mailCreateur" placeholder="Entrez votre adresse e-mail">
+			
+			<br />
 			
 			<label for="dateDeb">Date de début</label>
-			<input type="text" class="form-control" id="dateDeb" name="dateDeb" placeholder="Entrez une date de début">
+			<!--<input type="text" class="form-control" id="dateDeb" name="dateDeb" placeholder="Entrez une date de début">-->
+			<input type="text" class="form-control" style="width:110px;display:inline;margin:10px;" name="dateDeb" id="dateDeb" /> 
 			
 			<label for="dateDeb">Date de fin</label>
-			<input type="text" class="form-control" id="dateFin" name="dateFin" placeholder="Entrez une date de fin">
+			<!--<input type="text" class="form-control" id="dateFin" name="dateFin" placeholder="Entrez une date de fin">-->
+			<input type="text" class="form-control" style="width:110px;display:inline;margin:10px;" name="dateFin" id="dateFin" /> 
 			
+			<br />
 			<br />
 			
 			<label for="mail">Partager avec</label> <button class="btn btn-info" type="button" onclick="javascript:ajouterChampMail();" ><span class="glyphicon glyphicon-plus"></span> Ajouter un champ</button>
@@ -62,10 +108,6 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<!-- Ajout des scripts JS à la fin pour un chargement plus rapide -->
-<?php
-	include_once("include_scripts.php");
-?>
 
 <script type="text/JavaScript">
 
