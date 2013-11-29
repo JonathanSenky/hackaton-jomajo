@@ -125,7 +125,12 @@
                     </div> <!-- Fin liste des propositions -->
                 </div> <!-- Fin colonne de gauche -->
                 <div class="col-md-3">
-                    <h3>ICI CHAT</h3>
+                    <h3><strong>Commentaires : </strong></h3>
+                    <div id="divCommentaires">
+                    </div>
+                    <center>
+                        <button class="btn btn-info">Ajouter un commentaire</button>
+                    </center>
                 </div>
             </div>
         </div>
@@ -141,6 +146,7 @@
             var page=1;
             var results=1;
             var timer=0;
+			var idSalle=<?php echo $idSalle;?>;
             var idEtape=<?php echo $idEtape;?>;
             var mode='lgt';
             
@@ -158,6 +164,34 @@
                        });
             }
             
+	
+	
+	function recupCommentaires()
+            {
+                $.getJSON('services/s_commentaires.php?mode=get&idSalle='+idSalle, function (json)
+                          {
+                                var html;
+                                console.log(json);
+                                if(json.length==0)
+                                {
+                                    html='Soyez le premier à poster un commentaire sur ce voyage !';
+                                }
+                                else
+                                {
+                                    html='<table class="table table-stripped table-condensed"><tbody>';
+                                    for(var i=0; i<json.length; i++)
+                                    {
+                                        var commentaire=json[i];
+                                        var auteur=commentaire.auteur;
+                                        var contenu=commentaire.contenu;
+                                        var dateCommentaire=commentaire.dateCommentaire;
+                                        html+='<tr><td><h4><strong>'+auteur+', </strong><small>le '+dateCommentaire+'</small> : </h4>'+contenu+'</td></tr>';
+                                    }
+                                    html+='</tbody></table>';
+                                }
+                                $('#divCommentaires').html(html);
+                          });
+            }
             function genererLogements(json)
             {
                 if(json.length==0)
@@ -292,6 +326,7 @@
              $(function () {
                 setTimeout(function(){timer=1;},5000);
                 genererListe('lgt');
+				recupCommentaires();
                 //$('#myModal').modal('show');
                 var $window = $(window);
                 $window.scroll(function () {
