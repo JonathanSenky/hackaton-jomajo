@@ -157,7 +157,7 @@
                 var nbVotes = parseInt($('#spanVote'+pid).html()) +1;
                 $('#spanVote'+pid).html(nbVotes);
                 localStorage[pid] = true;
-                $.get('bdd_vote.php?idProposition='+pid+'&idEtape=1&idTypeProposition='+idTypeProposition, function success(data)
+                $.get('bdd_vote.php?idProposition='+encodeURIComponent(pid)+'&idEtape=1&idTypeProposition='+encodeURIComponent(idTypeProposition), function success(data)
                        {
                            $('#myModal').modal('hide');
                            console.log('Vote pris en compte');
@@ -170,7 +170,7 @@
                $('#myModal').modal('show');                
                 var auteur=$('#inputAuteur').val();
                 var contenu=$('#textAreaContenu').val();
-                $.get('services/s_commentaires.php?mode=post&idSalle='+idSalle+'&auteur='+auteur+'&contenu='+contenu, function (json)
+                $.get('services/s_commentaires.php?mode=post&idSalle='+encodeURIComponent(idSalle)+'&auteur='+encodeURIComponent(auteur)+'&contenu='+encodeURIComponent(contenu), function (json)
                           {
                                 $('#inputAuteur').val('');
                                 $('#textAreaContenu').val('');
@@ -180,7 +180,7 @@
             
 	        function recupCommentaires(flag)
             {
-                $.getJSON('services/s_commentaires.php?mode=get&idSalle='+idSalle, function (json)
+                $.getJSON('services/s_commentaires.php?mode=get&idSalle='+encodeURIComponent(idSalle), function (json)
                           {
                                 var html;
                                 console.log(json);
@@ -327,11 +327,11 @@
                 {
                         case 'lgt':
                             $('#liLgt').addClass('active');
-                            $.getJSON('services/s_appel_recup.php?mode=lgt&idEtape='+idEtape+'&page='+page+'&ordrePrix='+ordrePrix, genererLogements);
+                            $.getJSON('services/s_appel_recup.php?mode=lgt&idEtape='+encodeURIComponent(idEtape)+'&page='+encodeURIComponent(page)+'&ordrePrix='+encodeURIComponent(ordrePrix), genererLogements);
                             break;
                         case 'exp':
                             $('#liExp').addClass('active');
-                            $.getJSON('services/s_appel_recup.php?mode=exp&idEtape='+idEtape+'&page='+page, genererExperiences);
+                            $.getJSON('services/s_appel_recup.php?mode=exp&idEtape='+encodeURIComponent(idEtape)+'&page='+encodeURIComponent(page), genererExperiences);
                             break;
                         case 'resto':
                             $('#liResto').addClass('active');
@@ -343,6 +343,9 @@
                 setTimeout(function(){timer=1;},5000);
                 genererListe('lgt');
 				recupCommentaires();
+                window.setInterval(function() {
+                    recupCommentaires();
+                }, 300000);
                 //$('#myModal').modal('show');
                 var $window = $(window);
                 $window.scroll(function () {

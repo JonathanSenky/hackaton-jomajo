@@ -1,10 +1,5 @@
 <?php
     include_once('../connexion_db/connexion.php');
-
-	// Afficher les erreurs à l'écran
-ini_set('display_errors', 1);
-// Afficher les erreurs et les avertissements
-error_reporting(e_all);
 	
     if(isset($_GET['mode']) && !empty($_GET['mode']))
     {
@@ -40,7 +35,7 @@ error_reporting(e_all);
         $commentaires = array();
         while($row=$req->fetch())
         {
-            array_push($commentaires, array('auteur'=>$row[1], 'contenu'=>$row[2], 'dateCommentaire'=>$row[3]));
+            array_push($commentaires, array('auteur'=>$row[1], 'contenu'=>nl2br($row[2]), 'dateCommentaire'=>$row[3]));
         }
         $req->closeCursor();
 
