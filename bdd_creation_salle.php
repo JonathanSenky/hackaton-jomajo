@@ -1,5 +1,4 @@
 <?php
-	
 	//sécurisation
 	if(!isset($_POST['nomSalle']) || empty($_POST['nomSalle']) || !isset($_POST['mailCreateur']) || empty($_POST['mailCreateur']) || !isset($_POST['dateDeb']) || empty($_POST['dateDeb']) || !isset($_POST['dateFin']) || empty($_POST['dateFin']) || !isset($_POST['dest']) || empty($_POST['dest'])){
 		header('location:erreur.php?erreur=vide_sauf_partage');
@@ -32,7 +31,6 @@
 		header('location:erreur.php?erreur=format_date');
 		exit;
 	}
-	
 	
 	//includes
 	include_once("fonctions.php");
@@ -67,7 +65,7 @@
 		$lienServeur = declarer_lien_serveur();
 		$urlSite = $lienServeur . "salle.php?lienSalle=" . $lienSalle;
 		//envoi du mail pour le créateur
-		$sujet = "Création de la salle réussie !";
+		$sujet = "Creation de la salle reussie !";
 		
 		$mess_text_createur = "Bonjour,\n\nVotre salle a bien été créée, un mail a aussi été envoyé aux personnes avec qui vous vouliez la partager. Cette salle vous permet de discuter ensemble de l'organisation d'un voyage à $dest.
 		\n\n
@@ -96,7 +94,7 @@
 			for($i=0;$i<count($tab);$i++){
 				if(isset($tab[$i]) && !empty($tab[$i])){
 					//envoi du mail pour un partage
-					$sujet_partage = "On vous a invité à un partage sur Ginger Corp !";
+					$sujet_partage = "On vous a invite à un partage sur Ginger Corp !";
 					
 					$mess_text_partage = "Bonjour,\n\nUne personne vous a envoyé une invitation à rejoindre une salle de discussion pour organiser un voyage à $dest.
 					\n\n
@@ -116,6 +114,9 @@
 				}
 			}
 		}
+		
+		//on le redirige vers la salle
+		header('location:salle.php?lienSalle=' . $lienSalle);
 		
 	
 	

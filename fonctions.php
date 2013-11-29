@@ -42,14 +42,14 @@ function envoi_mail($sujet,$mess_html,$mess_text,$mail)
 	//message text :
 	
 	$mess = '--'.$frontiere."\r\n";
-	$mess .= 'Content-Type: text/plain; charset="iso-8859-1"'."\n";
+	$mess .= 'Content-Type: text/plain; charset="UTF-8"'."\n";
 	$mess .= 'Content-Transfer-Encoding: base64'."\n\n";
 	$mess .= $mess_text."\n\n"; 
 	
 	//message html
 	
 	$mess .= '--'.$frontiere."\r\n";
-	$mess .= 'Content-Type: text/html; charset="iso-8859-1"'."\n";
+	$mess .= 'Content-Type: text/html; charset="UTF-8"'."\n";
 	$mess .= 'Content-Transfer-Encoding: base64'."\n\n";
 	$mess .= $mess_html."\n\n";
 	
