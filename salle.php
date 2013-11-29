@@ -233,7 +233,7 @@
                     
                     var htmlImage = '<img class="vignette" src="'+urlPhoto+'">';
                     var htmlBoutonCarousel;
-                    var htmlBoutonDetails = '<a href="'+lien+'" target="_blank" class="btn btn-info">Plus de détails</a>';
+                    var htmlBoutonDetails = '<div style="text-align:center !important;" ><a href="'+lien+'" target="_blank" class="btn btn-info">Plus de détails</a></div>';
                     var htmlBoutonVote;
                     if(localStorage[pid])
                     {
@@ -272,7 +272,7 @@
                     
                     var htmlImage = '<img class="vignette" src="'+urlPhoto+'">';
                     var htmlBoutonCarousel;
-                    var htmlBoutonDetails = '<a href="'+lien+'" target="_blank" class="btn btn-info">Plus de détails</a>';
+                    var htmlBoutonDetails = '<div style="text-align:center !important;" ><a href="'+lien+'" target="_blank" class="btn btn-info">Plus de détails</a></div>';
                     var htmlBoutonVote;
                     if(localStorage[mid])
                     {
