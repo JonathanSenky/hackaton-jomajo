@@ -23,7 +23,7 @@
 		
 		$content = json_decode(file_get_contents($url));
 		
-		return $content;
+		return json_encode($content);
 	}
 	
 	// Récupère la liste des logements avec en tête de liste les logements les plus plussoyés
@@ -31,17 +31,71 @@
 	{
 		global $bdd;
 		
-		$req = $bdd->prepare('SELECT destination, dateDebut, dateFin FROM etapes WHERE idEtape=? ORDER BY votePlus DESC');
+		$req = $bdd->prepare('SELECT destination, dateDebut, dateFin FROM etapes WHERE idEtape=?');
         $req->execute(array($id_etape));
 		
         $etape = $req->fetchAll();
 		
 		$req->closeCursor();
 		
-		$logements_plus = recup_logements_bdd($id_etape, $page);
-		$logements_api = recup_logements_api($etape[0], $etape[1], $etape[2], $page);
+		$logements_bdd = json_decode(recup_logements_bdd($id_etape, $page));
+		$logements_api = json_decode(recup_logements_api($etape[0]['destination'], $etape[0]['dateDebut'], $etape[0]['dateFin'], $page));
 		
+		$res = array();
 		
+		if($page == 1)
+		{
+			foreach($logements_bdd as $num_logement => $logement)
+			{
+				array_push($res, $logement);
+			}
+		}
+		
+		foreach($logements_api as $num_logement => $logement)
+		{
+			if(!in_array($logement, $res))
+			{
+				array_push($res, $logement);
+			}
+		}
+		
+		return json_encode($res);
+	}
+	
+	// Récupère la liste des logements avec en tête de liste les logements les plus plussoyés
+	function recup_experiences($id_etape, $page = 1)
+	{
+		global $bdd;
+		
+		$req = $bdd->prepare('SELECT destination, dateDebut, dateFin FROM etapes WHERE idEtape=?');
+        $req->execute(array($id_etape));
+		
+        $etape = $req->fetchAll();
+		
+		$req->closeCursor();
+		
+		$experiences_bdd = json_decode(recup_experiences_bdd($id_etape, $page));
+		$experiences_api = json_decode(recup_experiences_api($etape[0]['destination'], $etape[0]['dateDebut'], $etape[0]['dateFin'], $page));
+		
+		$res = array();
+		
+		if($page == 1)
+		{
+			foreach($experiences_bdd as $num_experience => $experience)
+			{
+				array_push($res, $experience);
+			}
+		}
+		
+		foreach($experiences_api as $num_experience => $experience)
+		{
+			if(!in_array($experience, $res))
+			{
+				array_push($res, $experience);
+			}
+		}
+		
+		return json_encode($res);
 	}
 	
 	// Récupère un logement précis en fonction de son pid
@@ -53,12 +107,14 @@
 					'pid' => $id
 					);
 		
-		$logement = recup_donnees_api($url_api_logements, $options);
+		$logement = json_decode(recup_donnees_api($url_api_logements, $options));
 		
 		if($logement == null)
 			return null;
 		
-		return $logement->items[0];
+		$logement->items[0]->nb_votes = 0;
+		
+		return json_encode($logement->items[0]);
 	}
 	
 	// Récupère la liste des logements disponibles dans une ville entre deux dates
@@ -72,7 +128,7 @@
 					);
 		
 		// On récupère la liste des logements à partir de l'api outpost
-		$logements = recup_donnees_api($url_api_logements, $options);
+		$logements = json_decode(recup_donnees_api($url_api_logements, $options));
 		
 		// On enlève de cette liste tous les logements dont les dates d'unavaibilité sont comprises
 		// entre debut et fin
@@ -102,7 +158,12 @@
 			unset($logements[$num_a_retirer[$i]]);
 		}
 		
-		return $logements;
+		foreach($logements as $num_logement => $logement)
+		{
+			$logement->nb_votes = 0;
+		}
+		
+		return json_encode($logements);
 	}
 	
 	// Récupère la liste des logements/experiences concernant une étape à partir de la bdd
@@ -128,12 +189,39 @@
 		
 		$logements = recup_propositions_bdd($id_etape, $id_type_logement);
 		
+		$vote_plus = array();
+		
 		for($i = 0;$i < sizeof($logements);$i++)
 		{
-			$logements[$i] = recup_logement_api($logements[$i]);
+			array_push($vote_plus, $logements[$i]['votePlus']);
+			$logements[$i] = json_decode(recup_logement_api($logements[$i]['idProposition']));
+		}
+		
+		for($i = 0;$i < sizeof($vote_plus);$i++)
+		{
+			$logements[$i]->nb_votes = $vote_plus[$i];
 		}
 		
 		return json_encode($logements);
+	}
+	
+	// Récupère une experience précis en fonction de son mid
+	function recup_experience_api($id)
+	{
+		global $url_api_experiences;
+		
+		$options = array(
+					'mid' => $id
+					);
+		
+		$experience = json_decode(recup_donnees_api($url_api_experiences, $options));
+		
+		if($experience == null)
+			return null;
+		
+		$experience->items[0]->nb_votes = 0;
+		
+		return json_encode($experience->items[0]);
 	}
 	
 	// Récupère la liste des experiences approuvées par les utilisateurs
@@ -144,11 +232,17 @@
 		
 		$experiences = recup_propositions_bdd($id_etape, $id_type_experience);
 		
-		var_dump($experiences);
+		$vote_plus = array();
 		
 		for($i = 0;$i < sizeof($experiences);$i++)
 		{
-			$experiences[$i] = recup_experience_api($experiences[$i]);
+			array_push($vote_plus, $experiences[$i]['votePlus']);
+			$experiences[$i] = json_decode(recup_experience_api($experiences[$i]['idProposition']));
+		}
+		
+		for($i = 0;$i < sizeof($vote_plus);$i++)
+		{
+			$experiences[$i]->nb_votes = $vote_plus[$i];
 		}
 		
 		return json_encode($experiences);
@@ -164,22 +258,25 @@
 					'page' => $page
 					);
 		
-		$experiences = recup_donnees_api($url_api_experiences, $options);
-		
-		$nb_votes = array();
+		$experiences = json_decode(recup_donnees_api($url_api_experiences, $options));
 		
 		for($i = 0;$i < sizeof($experiences->items);$i++)
 		{
-			array_push($nb_votes, 0);
+			$experiences->items[$i]->nb_votes = 0;
 		}
 		
-		return array('liste_experiences' => $experiences->items, 'nb_votes' => $nb_votes);
+		return json_encode($experiences->items);
 	}
 	
 	//var_dump(recup_logement_api('roo133543'));
-	//var_dump(recup_logements_bdd(0));
-	var_dump(recup_experiences_bdd(0));
 	//var_dump(recup_logements_api("Strasbourg", '2013-11-27 16:37:58', '2013-12-03 16:37:58'));
+	//var_dump(recup_logements_bdd(1));
+	
+	//var_dump(recup_experience_api('get34846'));
 	//var_dump(recup_experiences_api("Strasbourg"));
+	//var_dump(recup_experiences_bdd(1));
+	
+	
 	//var_dump(recup_logements(1));
+	//var_dump(recup_experiences(1));
 ?>
