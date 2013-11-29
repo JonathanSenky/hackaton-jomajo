@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
+		<LINK REL="SHORTCUT ICON" href="favicon.png">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
@@ -10,6 +11,7 @@
         
         <?php
             include_once('connexion_db/connexion.php');
+			include_once('fonctions.php');
             $erreur=0;
             if(isset($_GET['lienSalle']) && !empty($_GET['lienSalle']))
             {
@@ -90,10 +92,10 @@
                                     <td><strong>Destination : </strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $destination;?></td>
                                 </tr>
                                 <tr>
-                                    <td><strong>Date de début : </strong>&nbsp;<?php echo $dateDebut;?></td>
+                                    <td><strong>Date de début : </strong>&nbsp;<?php echo split_date($dateDebut);//cf fonctions.php pour la fonction split_date (transforme une date au format SQL en toute lettre ?></td>
                                 </tr>
                                 <tr>
-                                    <td><strong>Date de fin : </strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $dateFin;?></td>
+                                    <td><strong>Date de fin : </strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo split_date($dateFin);?></td>
                                 </tr>
                             </tbody>
                         </table>

@@ -6,6 +6,7 @@
 <head>
 <meta charset="utf-8">
 <title> Hackathon </title>
+<LINK REL="SHORTCUT ICON" href="favicon.png">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="css/copycss.css">
 <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
