@@ -27,7 +27,7 @@
 	}
 	
 	// Récupère la liste des logements avec en tête de liste les logements les plus plussoyés
-	function recup_logements($id_etape, $page = 1)
+	function recup_logements($id_etape, $page = 1, $ordre_prix = 0)
 	{
 		global $bdd;
 		
@@ -53,7 +53,7 @@
 		
 		foreach($logements_api as $num_logement => $logement)
 		{
-			if(!in_array($logement, $res))
+			if(!in_array($logement, $res) && $logement->price > $ordre_prix)
 			{
 				array_push($res, $logement);
 			}
@@ -277,6 +277,6 @@
 	//var_dump(recup_experiences_bdd(1));
 	
 	
-	//var_dump(recup_logements(1));
+	//var_dump(recup_logements(1, 1, 100));
 	//var_dump(recup_experiences(1));
 ?>
